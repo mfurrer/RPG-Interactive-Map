@@ -14,8 +14,12 @@ def main():
 	pygame.display.set_caption("Interractive Map")
 	speed = [2,2]
 	clock = pygame.time.Clock()
-	for i in range(7):
-		balls.append(pygame.image.load("ball.jpg"))
+	#for i in range(7):
+	#	balls.append(pygame.image.load("ball.jpg"))
+	balls.append(pygame.image.load('ball1.gif'))
+	balls.append(pygame.image.load('ball2.gif'))
+	balls.append(pygame.image.load('ball3.gif'))
+	balls.append(pygame.image.load('ball4.gif'))
 	black = 0,0,0
 	white = 255,255,255
 	print len(balls)
@@ -27,11 +31,10 @@ def main():
 	for i in range(len(balls)):
 		ballsrect.append(balls[i].get_rect())
 	clock = pygame.time.Clock()
-	speeds = []
-	for i in range(len(balls)):
-		speeds.append( [random.random()*2+i, random.random()*2+1 ] )
-	print speeds	
+
 	run = True
+	moving = False
+	to_move = 0
 	
 	while run:
 		for event in pygame.event.get():
@@ -39,28 +42,25 @@ def main():
 				run = False
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1 :
-					touched = [ b for b in balls if b.get_rect().collidepoint(event.pos)]
-					print touched
+					if moving :
+						print "moving"
+					else :
+						to_move = -1
+						for b in range(len(ballsrect)) :
+							if ballsrect[b].collidepoint(event.pos) :
+								to_move = b
+								print "moving: ", b
+								exit
+						moving = (to_move >= 0)
+			if event.type == pygame.MOUSEBUTTONUP :
 				if event.button == 1 :
-					speed[0] = -speed[0]
-				elif event.button == 3 :
-					speed[1] = -speed[1]
-				elif event.button == 4 :
-					speed = [ 2+x for x in speed]
-					print speed
-				elif event.button == 5 :
-					speed = [ max(x-2,1) for x in speed]
-					print speed
-				else :
-					print event
-		for i in range(len(ballsrect)):
-			ballsrect[i] = ballsrect[i].move(speeds[i])
+					moving = False
+			if event.type == pygame.MOUSEMOTION and moving :
+				print event.pos, moving, to_move
+				ballsrect[to_move].x = event.pos[0] - ballsrect[to_move].width/2
+				ballsrect[to_move].y = event.pos[1] - ballsrect[to_move].height/2
 
-			if ballsrect[i].left < 0 or ballsrect[i].right > width:
-				speeds[i][0] = -speeds[i][0]
-			if ballsrect[i].top < 0 or ballsrect[i].bottom > height:
-				speeds[i][1] = -speeds[i][1]
-		
+
 		screen.fill(white)
 		for i in range(len(balls)):
 			screen.blit(balls[i], ballsrect[i])
