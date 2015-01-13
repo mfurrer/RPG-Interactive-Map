@@ -8,9 +8,6 @@ import sys, pygame, random
 
 black = 0,0,0
 white = 255,255,255
-balls = []
-ballsrect = []
-backgrounds = []
 
 class BackgroundCollection:
 	def __init__(self, size):
@@ -61,7 +58,6 @@ class PlayerCollection:
 			r = range(1)
 		else:
 			r = range(1,len(self.players_rect))
-		print r
 		for p in r :
 			if self.players_rect[p].collidepoint(pos) :
 				self.collision = p
@@ -74,21 +70,6 @@ class PlayerCollection:
 		else:
 			for i in range(1,len(self.players)):
 				screen.blit(self.players[i], self.players_rect[i])
-
-def load_balls():
-	balls.append(pygame.image.load('ball1.gif'))
-	balls.append(pygame.image.load('ball2.gif'))
-	balls.append(pygame.image.load('ball3.gif'))
-	balls.append(pygame.image.load('ball4.gif'))
-	for i in range(len(balls)):
-		ballsrect.append(balls[i].get_rect())
-
-def refresh_display_old(screen, background):
-	screen.fill(white)
-	screen.blit(background, [0,0])
-	for i in range(len(balls)):
-		screen.blit(balls[i], ballsrect[i])
-	pygame.display.flip()
 
 def refresh_display(screen, objects):
 	screen.fill(white)
@@ -106,11 +87,10 @@ def main():
 
 	bg = BackgroundCollection(size)
 	bg.load_files(['background0.jpg', 'background1.jpg'])
-	load_balls()
 	players = PlayerCollection()
+	players.group_mode = True
 	players.load_files(['ball.jpg', 'ball1.gif', 'ball2.gif', 'ball3.gif', 'ball4.gif'])
-	#refresh_display(screen, bg.background) #backgrounds[curr_background])
-	refresh_display(screen, [bg, players]) #backgrounds[curr_background])
+	refresh_display(screen, [bg, players])
 	clock = pygame.time.Clock()
 
 	run = True
@@ -124,24 +104,12 @@ def main():
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1 :
 				    if players.collide(event.pos):
-						print "collision", players.collision
 						moving = True
 						to_move = players.collision
-#					if moving :
-#						print "moving"
-#					else :
-#						to_move = -1
-#						for b in range(len(ballsrect)) :
-#							if ballsrect[b].collidepoint(event.pos) :
-#								to_move = b
-#								exit
-#						moving = (to_move >= 0)
 			if event.type == pygame.MOUSEBUTTONUP :
 				if event.button == 1 :
 					moving = False
 			if event.type == pygame.MOUSEMOTION and moving :
-				#ballsrect[to_move].x = event.pos[0] - ballsrect[to_move].width/2
-				#ballsrect[to_move].y = event.pos[1] - ballsrect[to_move].height/2
 				players.move(to_move, event.pos)
 			if event.type == pygame.KEYDOWN :
 				if event.key == pygame.K_ESCAPE:
@@ -149,17 +117,13 @@ def main():
 				if event.key == pygame.K_g:
 					players.group_mode = not players.group_mode
 				if event.key == pygame.K_1:
-					curr_background = 0
 					bg.select_bg(0)
 				if event.key == pygame.K_2:
-					curr_background = min(1,len(backgrounds)-1)
 					bg.select_bg(1)
 				if event.key == pygame.K_3:
-					curr_background = min(2,len(backgrounds)-1)
 					bg.select_bg(2)
 		
-		#refresh_display(screen, bg.background) #backgrounds[curr_background])
-		refresh_display(screen, [bg, players]) #backgrounds[curr_background])
+		refresh_display(screen, [bg, players]) 
 		clock.tick(25)
 
 if __name__ == '__main__':
