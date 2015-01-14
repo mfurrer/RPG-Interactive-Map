@@ -43,7 +43,8 @@ class BackgroundCollection:
 		self.select_bg(self.background_id)
 
 class PlayerCollection:
-	def __init__(self):
+	def __init__(self, size=(75,75)):
+		self.size = size
 		self.players = []
 		self.players_rect = []
 		self.group_mode = False
@@ -51,6 +52,7 @@ class PlayerCollection:
 		
 	def load(self, file):
 		img = pygame.image.load(file).convert()
+		img = pygame.transform.scale(img, self.size)
 		self.players.append(img)
 		self.players_rect.append(img.get_rect())
 	
