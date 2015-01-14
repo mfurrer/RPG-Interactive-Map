@@ -1,6 +1,8 @@
-ball.jpg
-ball*.gif
-background*.jpg
+Backgrounds/*.jpg
+Backgrounds/*.gif
+Players/*.jpg
+Players/*.gif
+scratch/*
 
 
 # Byte-compiled / optimized / DLL files
