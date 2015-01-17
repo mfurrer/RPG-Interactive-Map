@@ -2,20 +2,13 @@
 
 ## The Why
 
-I play RPG (Donjon de Naheulbeuk) and I am always fighting with printing
-the map, I do not have good figurine for player and at the end of the days
-the battle are a mess to follow.
+I play RPG (Donjon de Naheulbeuk) and I am always fighting with printing the map, I do not have good figurine for player and at the end of the days the battle are a mess to follow.
 
-Last time we played we where in ski holiday so no printing facilities
-(but plenty of computing facilities) and I had a computer and a TV screen.
+Last time we played we were in ski holiday so no printing facilities (but plenty of computing facilities) and I had a computer and a TV screen.
 
-The idea : display the map on the TV set, then display the player and move them
-on the map (there are usually 6 players).
-
+The idea: display the map on the TV set, then display the player and move them on the map (there are usually 6 players).
 The problem: I could not find any application suitable for that.
-
 The Solution: this application :-)
-
 ## The What
 
    * a PyGame application
@@ -30,18 +23,14 @@ The Solution: this application :-)
 
 ### Installation
 
-   * installe Python and PyGame
+   * install Python and PyGame
    * put the maps in the Background folder
    * put the players in the Players folder
    * run it
 
-images can be JPEG, GIF or PNG. They are loaded in alphabetical order, this means
-that namming them with 0xxxx, 1yyyy will help (see usage).
+*Tips:* images can be JPEG, GIF or PNG. They are loaded in alphabetical order, this means that naming them with 0xxxx, 1yyyy will help (see usage).
 
-GIF,PNG is recommended for players image if you want transparency support.
-
-
-
+*Tip:* GIF,PNG is recommended for players image if you want transparency support.
 ### Usage
    * 1,2,3 keys switch between the maps (1 in the first in alphabetical order, 2 the second, etc..)
    * G toggle between group and players icon, group icon is the first file in alphabetical order, go better name this file _group.gif)
